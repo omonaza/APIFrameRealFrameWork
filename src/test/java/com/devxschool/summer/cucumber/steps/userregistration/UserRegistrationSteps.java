@@ -1,6 +1,7 @@
 package com.devxschool.summer.cucumber.steps.userregistration;
 
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationRequest;
+import com.devxschool.summer.pojos.fooddelivery.UserRegistrationResponse;
 import com.google.gson.Gson;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -44,7 +45,9 @@ public class UserRegistrationSteps {
 
     @Then("^verify that response message is \"([^\"]*)\"$")
     public void verify_that_response_message_is(String responseMessage) throws Throwable {
-        Assert.assertEquals(responseMessage, response.body().jsonPath().getString("status"));
+        UserRegistrationResponse userRegistrationResponse = gson.fromJson(response.body().asString(), UserRegistrationResponse.class);
+
+        Assert.assertEquals(responseMessage, userRegistrationResponse.getStatus());
     }
 
 }
