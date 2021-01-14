@@ -10,11 +10,11 @@ import org.junit.runner.RunWith;
                 "src/test/resources/features/food-delivery/Food.feature"
         },
         glue = {
-                "com.devxschool.cucumber.steps.foodmanagement"
+                "com.devxschool.summer.cucumber.steps.foodmanagement"
         },
         tags = {
                 "@addNewFoodEntry"
         },
-        dryRun = true
+        dryRun = false
 )
 public class FoodManagementTest { }

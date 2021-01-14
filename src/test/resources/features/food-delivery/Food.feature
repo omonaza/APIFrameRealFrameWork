@@ -7,4 +7,6 @@ Feature: Food Management
       |description|imageUrl       | price   |  name     |  foodType   |
       |Wine       |https:foods.com| 20.00   |  Merlot   |  Beverages  |
     Then verify that status code is 200
-    Then verify that food has been successfully added
+    Then the following food has been added:
+      |description|imageUrl       | price   |  name     |  foodType   |
+      |Wine       |https:foods.com| 20.00   |  Merlot   |  Beverages  |
