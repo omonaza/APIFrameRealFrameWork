@@ -12,6 +12,7 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -43,11 +44,25 @@ public class UserRegistrationSteps {
         Assert.assertEquals(statusCode, response.getStatusCode());
     }
 
-    @Then("^verify that response message is \"([^\"]*)\"$")
-    public void verify_that_response_message_is(String responseMessage) throws Throwable {
+    /*
+    * Cucumber can't automatically convert complex jsons/data tables into POJO. Use List of maps.
+    *
+    * */
+    @Then("^the following user has been registered:$")
+    public void verify_that_response_message_is(List<Map<String, String>> expectedUser) throws Throwable {
         UserRegistrationResponse userRegistrationResponse = gson.fromJson(response.body().asString(), UserRegistrationResponse.class);
 
-        Assert.assertEquals(responseMessage, userRegistrationResponse.getStatus());
+        Assert.assertEquals(expectedUser.get(0).get("status"), userRegistrationResponse.getStatus());
+        Assert.assertEquals(expectedUser.get(0).get("username"), userRegistrationResponse.getUserInfo().getUsername());
+        Assert.assertEquals(expectedUser.get(0).get("fullName"), userRegistrationResponse.getUserInfo().getUserProfile().getFullName());
+    }
+
+    @Then("^the following error message has been returned:$")
+    public void verifyErrorMessage(List<Map<String, String>> expectedErrorMessage) {
+        UserRegistrationResponse userRegistrationResponse = gson.fromJson(response.body().asString(), UserRegistrationResponse.class);
+
+        Assert.assertEquals(expectedErrorMessage.get(0).get("status"), userRegistrationResponse.getStatus());
+        Assert.assertEquals(expectedErrorMessage.get(0).get("errorMessage"), userRegistrationResponse.getErrorMessage());
     }
 
 }
