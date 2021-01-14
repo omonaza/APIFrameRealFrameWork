@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
                 "com.devxschool.summer.cucumber.steps.userregistration"
         },
         tags = {
-                "@userRegistersWithExistingUsername"
+                "@userRegisterWithEmptyOrNullPassword"
         },
         dryRun = false
 )
