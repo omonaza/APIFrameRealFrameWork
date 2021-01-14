@@ -29,6 +29,8 @@ public class UserRegistrationSteps {
 
     @Given("^user registers to food delivery app with the following fields:$")
     public void user_registers_to_food_delivery_app_with_the_following_fields(List<UserRegistrationRequest> usersToRegister) throws Throwable {
+
+        // Serializing usersToRegister element to the JSON String
         String userJson = gson.toJson(usersToRegister.get(0));
 
         response = given()
@@ -36,7 +38,7 @@ public class UserRegistrationSteps {
                 .accept(ContentType.JSON)
                 .body(userJson)
                 .when()
-                    .request("POST", "/user/registration");
+                .request("POST", "/user/registration");
     }
 
     @Then("^verify that status code is (\\d+)$")
@@ -45,11 +47,12 @@ public class UserRegistrationSteps {
     }
 
     /*
-    * Cucumber can't automatically convert complex jsons/data tables into POJO. Use List of maps.
-    *
-    * */
+     * Cucumber can't automatically convert complex jsons/data tables into POJO. Use List of maps.
+     *
+     * */
     @Then("^the following user has been registered:$")
     public void verify_that_response_message_is(List<Map<String, String>> expectedUser) throws Throwable {
+        // Deserializing response body JSON String to UserRegistrationResponse object
         UserRegistrationResponse userRegistrationResponse = gson.fromJson(response.body().asString(), UserRegistrationResponse.class);
 
         Assert.assertEquals(expectedUser.get(0).get("status"), userRegistrationResponse.getStatus());
