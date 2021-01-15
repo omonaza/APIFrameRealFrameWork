@@ -52,4 +52,9 @@ public class FoodManagementSteps {
         Assert.assertEquals(expectedFood.get(0).getPrice(), actualFood.getFoodCached().get(0).getPrice());
         Assert.assertEquals(expectedFood.get(0).getName(), actualFood.getFoodCached().get(0).getName());
     }
+
+    @Then("^verify response error message \"([^\"]*)\"$")
+    public void verify_response_error_message(String expectedErrorMessage) throws Throwable {
+        Assert.assertEquals(expectedErrorMessage, response.body().jsonPath().getString("errorMessage"));
+    }
 }
