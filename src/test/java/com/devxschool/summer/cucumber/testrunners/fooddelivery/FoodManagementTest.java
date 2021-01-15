@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
                 "com.devxschool.summer.cucumber.steps.foodmanagement"
         },
         tags = {
-                "@addNewFoodEntry"
+                "@updateFoodEntry"
         },
         dryRun = false
 )
