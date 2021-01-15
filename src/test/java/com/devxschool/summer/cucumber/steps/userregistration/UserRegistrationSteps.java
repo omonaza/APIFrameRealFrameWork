@@ -2,6 +2,7 @@ package com.devxschool.summer.cucumber.steps.userregistration;
 
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationRequest;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationResponse;
+import com.devxschool.summer.utility.ObjectConverter;
 import com.google.gson.Gson;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -19,11 +20,9 @@ import static io.restassured.RestAssured.given;
 public class UserRegistrationSteps {
 
     private Response response;
-    private Gson gson;
 
     @Before
     public void setUp() {
-        gson = new Gson();
         RestAssured.baseURI = "http://localhost:8082";
     }
 
@@ -31,7 +30,7 @@ public class UserRegistrationSteps {
     public void user_registers_to_food_delivery_app_with_the_following_fields(List<UserRegistrationRequest> usersToRegister) throws Throwable {
 
         // Serializing usersToRegister element to the JSON String
-        String userJson = gson.toJson(usersToRegister.get(0));
+        String userJson = ObjectConverter.convertObjectToJson(usersToRegister.get(0));
 
         response = given()
                 .contentType(ContentType.JSON)
@@ -53,7 +52,7 @@ public class UserRegistrationSteps {
     @Then("^the following user has been registered:$")
     public void verify_that_response_message_is(List<Map<String, String>> expectedUser) throws Throwable {
         // Deserializing response body JSON String to UserRegistrationResponse object
-        UserRegistrationResponse userRegistrationResponse = gson.fromJson(response.body().asString(), UserRegistrationResponse.class);
+        UserRegistrationResponse userRegistrationResponse = ObjectConverter.convertJsonToObject(response.body().asString(), UserRegistrationResponse.class);
 
         Assert.assertEquals(expectedUser.get(0).get("status"), userRegistrationResponse.getStatus());
         Assert.assertEquals(expectedUser.get(0).get("username"), userRegistrationResponse.getUserInfo().getUsername());
@@ -62,7 +61,7 @@ public class UserRegistrationSteps {
 
     @Then("^the following error message has been returned:$")
     public void verifyErrorMessage(List<Map<String, String>> expectedErrorMessage) {
-        UserRegistrationResponse userRegistrationResponse = gson.fromJson(response.body().asString(), UserRegistrationResponse.class);
+        UserRegistrationResponse userRegistrationResponse = ObjectConverter.convertJsonToObject(response.body().asString(), UserRegistrationResponse.class);
 
         Assert.assertEquals(expectedErrorMessage.get(0).get("status"), userRegistrationResponse.getStatus());
         Assert.assertEquals(expectedErrorMessage.get(0).get("errorMessage"), userRegistrationResponse.getErrorMessage());
