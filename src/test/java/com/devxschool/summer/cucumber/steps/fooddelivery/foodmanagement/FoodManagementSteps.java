@@ -1,18 +1,16 @@
-package com.devxschool.summer.cucumber.steps.foodmanagement;
+package com.devxschool.summer.cucumber.steps.fooddelivery.foodmanagement;
 
 import com.devxschool.summer.pojos.fooddelivery.FoodRequest;
 import com.devxschool.summer.pojos.fooddelivery.FoodResponse;
 import com.devxschool.summer.utility.ObjectConverter;
 import com.devxschool.summer.utility.PropertiesReader;
 import com.devxschool.summer.utility.RestHttpRequest;
-import com.google.gson.Gson;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
 

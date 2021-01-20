@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
                 "src/test/resources/features/food-delivery/FoodNegative.feature"
         },
         glue = {
-                "com.devxschool.summer.cucumber.steps.foodmanagement"
+                "com.devxschool.summer.cucumber.steps.fooddelivery.foodmanagement"
         },
         tags = {
                 "@updateFoodEntry"

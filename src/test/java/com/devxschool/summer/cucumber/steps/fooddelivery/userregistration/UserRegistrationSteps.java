@@ -1,10 +1,9 @@
-package com.devxschool.summer.cucumber.steps.userregistration;
+package com.devxschool.summer.cucumber.steps.fooddelivery.userregistration;
 
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationRequest;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationResponse;
 import com.devxschool.summer.utility.ObjectConverter;
 import com.devxschool.summer.utility.PropertiesReader;
-import com.google.gson.Gson;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
