@@ -3,6 +3,7 @@ package com.devxschool.summer.cucumber.steps.foodmanagement;
 import com.devxschool.summer.pojos.fooddelivery.FoodRequest;
 import com.devxschool.summer.pojos.fooddelivery.FoodResponse;
 import com.devxschool.summer.utility.ObjectConverter;
+import com.devxschool.summer.utility.PropertiesReader;
 import com.devxschool.summer.utility.RestHttpRequest;
 import com.google.gson.Gson;
 import cucumber.api.java.After;
@@ -24,7 +25,7 @@ public class FoodManagementSteps {
 
     @Before
     public void setUp() {
-        RestAssured.baseURI = "http://localhost:8082";
+        RestAssured.baseURI = PropertiesReader.getPropertiesValue("foodDeliveryBaseUrl");
     }
 
     @Given("^add new food to FoodDelivery with the following fields$")

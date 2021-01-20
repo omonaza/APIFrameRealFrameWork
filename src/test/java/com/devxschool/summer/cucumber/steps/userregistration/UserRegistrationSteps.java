@@ -3,6 +3,7 @@ package com.devxschool.summer.cucumber.steps.userregistration;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationRequest;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationResponse;
 import com.devxschool.summer.utility.ObjectConverter;
+import com.devxschool.summer.utility.PropertiesReader;
 import com.google.gson.Gson;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -23,7 +24,7 @@ public class UserRegistrationSteps {
 
     @Before
     public void setUp() {
-        RestAssured.baseURI = "http://localhost:8082";
+        RestAssured.baseURI = PropertiesReader.getPropertiesValue("foodPropertiesBaseUrl");
     }
 
     @Given("^user registers to food delivery app with the following fields:$")
