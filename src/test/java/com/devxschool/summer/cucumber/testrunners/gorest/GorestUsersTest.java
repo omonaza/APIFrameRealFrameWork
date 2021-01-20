@@ -10,12 +10,12 @@ import org.junit.runner.RunWith;
             "src/test/resources/features/gorest/Users.feature"
         },
         glue = {
-            "com.devxschool.summer.cucumber.steps.gorest.users"
+                "com.devxschool.summer.cucumber.steps.gorest.users",
+                "com.devxschool.summer.cucumber.steps.common"
         },
         tags = {
             "@successfullyCreateUser"
         },
         dryRun = false
 )
-public class GorestUsersTest {
-}
+public class GorestUsersTest { }

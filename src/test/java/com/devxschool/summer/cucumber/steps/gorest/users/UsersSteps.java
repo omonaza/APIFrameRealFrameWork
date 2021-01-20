@@ -1,5 +1,6 @@
 package com.devxschool.summer.cucumber.steps.gorest.users;
 
+import com.devxschool.summer.cucumber.steps.common.CommonData;
 import com.devxschool.summer.pojos.gorest.UserData;
 import com.devxschool.summer.pojos.gorest.UserResponse;
 import com.devxschool.summer.utility.ObjectConverter;
@@ -17,8 +18,11 @@ import org.junit.Assert;
 import java.util.List;
 
 public class UsersSteps {
+    private CommonData commonData;
 
-    private Response response;
+    public  UsersSteps(CommonData commonData) {
+        this.commonData = commonData;
+    }
 
     @Before
     public void setUp() {
@@ -32,20 +36,15 @@ public class UsersSteps {
 
         RestHttpRequest.addHeaders();
 
-        response = RestHttpRequest.requestSpecification
+        commonData.response = RestHttpRequest.requestSpecification
                 .body(json)
                 .when()
                 .request(String.valueOf(RestHttpRequest.HttpMethods.POST), "/users");
     }
 
-    @Then("^verify that status code is (\\d+)$")
-    public void verify_that_status_code_is(int statusCode) throws Throwable {
-        Assert.assertEquals(statusCode, response.getStatusCode());
-    }
-
     @Then("^the following user has been returned:$")
     public void the_following_user_has_been_returned(List<UserData> expectedUser) throws Throwable {
-        UserResponse userResponse = ObjectConverter.convertJsonToObject(response.body().asString(), UserResponse.class);
+        UserResponse userResponse = ObjectConverter.convertJsonToObject(commonData.response.body().asString(), UserResponse.class);
 
         Assert.assertEquals(expectedUser.get(0).getEmail(), userResponse.getData().getEmail());
         Assert.assertEquals(expectedUser.get(0).getGender(), userResponse.getData().getGender());
@@ -54,7 +53,7 @@ public class UsersSteps {
     }
 
     private void deleteUser() {
-        UserResponse userResponse = ObjectConverter.convertJsonToObject(response.body().asString(), UserResponse.class);
+        UserResponse userResponse = ObjectConverter.convertJsonToObject(commonData.response.body().asString(), UserResponse.class);
 
         RestHttpRequest.requestSpecification
                 .pathParam("userId", userResponse.getData().getId())

@@ -1,5 +1,6 @@
 package com.devxschool.summer.cucumber.steps.fooddelivery.userregistration;
 
+import com.devxschool.summer.cucumber.steps.common.CommonData;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationRequest;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationResponse;
 import com.devxschool.summer.utility.ObjectConverter;
@@ -18,8 +19,11 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class UserRegistrationSteps {
+    private CommonData commonData;
 
-    private Response response;
+    public UserRegistrationSteps(CommonData commonData) {
+        this.commonData = commonData;
+    }
 
     @Before
     public void setUp() {
@@ -32,17 +36,12 @@ public class UserRegistrationSteps {
         // Serializing usersToRegister element to the JSON String
         String userJson = ObjectConverter.convertObjectToJson(usersToRegister.get(0));
 
-        response = given()
+        commonData.response = given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(userJson)
                 .when()
                 .request("POST", "/user/registration");
-    }
-
-    @Then("^verify that status code is (\\d+)$")
-    public void verify_that_status_code_is(int statusCode) throws Throwable {
-        Assert.assertEquals(statusCode, response.getStatusCode());
     }
 
     /*
@@ -52,7 +51,7 @@ public class UserRegistrationSteps {
     @Then("^the following user has been registered:$")
     public void verify_that_response_message_is(List<Map<String, String>> expectedUser) throws Throwable {
         // Deserializing response body JSON String to UserRegistrationResponse object
-        UserRegistrationResponse userRegistrationResponse = ObjectConverter.convertJsonToObject(response.body().asString(), UserRegistrationResponse.class);
+        UserRegistrationResponse userRegistrationResponse = ObjectConverter.convertJsonToObject(commonData.response.body().asString(), UserRegistrationResponse.class);
 
         Assert.assertEquals(expectedUser.get(0).get("status"), userRegistrationResponse.getStatus());
         Assert.assertEquals(expectedUser.get(0).get("username"), userRegistrationResponse.getUserInfo().getUsername());
@@ -61,7 +60,7 @@ public class UserRegistrationSteps {
 
     @Then("^the following error message has been returned:$")
     public void verifyErrorMessage(List<Map<String, String>> expectedErrorMessage) {
-        UserRegistrationResponse userRegistrationResponse = ObjectConverter.convertJsonToObject(response.body().asString(), UserRegistrationResponse.class);
+        UserRegistrationResponse userRegistrationResponse = ObjectConverter.convertJsonToObject(commonData.response.body().asString(), UserRegistrationResponse.class);
 
         Assert.assertEquals(expectedErrorMessage.get(0).get("status"), userRegistrationResponse.getStatus());
         Assert.assertEquals(expectedErrorMessage.get(0).get("errorMessage"), userRegistrationResponse.getErrorMessage());
