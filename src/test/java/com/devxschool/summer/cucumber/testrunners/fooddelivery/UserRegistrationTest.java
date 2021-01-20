@@ -12,7 +12,8 @@ import org.junit.runner.RunWith;
                 "src/test/resources/features/food-delivery/UserRegistrationNegative.feature"
         },
         glue = {
-                "com.devxschool.summer.cucumber.steps.userregistration"
+                "com.devxschool.summer.cucumber.steps.fooddelivery.userregistration",
+                "com.devxschool.summer.cucumber.steps.common"
         },
         tags = {
                 "@userRegisterWithEmptyOrNullPassword"
