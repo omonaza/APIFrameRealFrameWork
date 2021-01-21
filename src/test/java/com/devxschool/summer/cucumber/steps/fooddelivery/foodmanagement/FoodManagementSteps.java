@@ -1,6 +1,7 @@
 package com.devxschool.summer.cucumber.steps.fooddelivery.foodmanagement;
 
 import com.devxschool.summer.cucumber.steps.common.CommonData;
+import com.devxschool.summer.cucumber.steps.fooddelivery.FoodDeliveryEndpoints;
 import com.devxschool.summer.pojos.fooddelivery.FoodRequest;
 import com.devxschool.summer.pojos.fooddelivery.FoodResponse;
 import com.devxschool.summer.utility.ObjectConverter;
@@ -35,13 +36,7 @@ public class FoodManagementSteps {
     public void addNewFoodToFoodDeliveryWithTheFollowingFields(List<FoodRequest> foodRequest) {
         String foodRequestJson = ObjectConverter.convertObjectToJson(foodRequest.get(0));
 
-        RestHttpRequest.addHeaders();
-
-        commonData.response = RestHttpRequest
-                .requestSpecification
-                .body(foodRequestJson)
-                .when()
-                .request(String.valueOf(RestHttpRequest.HttpMethods.POST), "/food/cache/add");
+        commonData.response = FoodDeliveryEndpoints.addFood(foodRequestJson);
     }
 
     @Then("^the following food has been added:$")
@@ -64,19 +59,11 @@ public class FoodManagementSteps {
     public void updateFood(String fieldName, List<FoodRequest> foodRequests) {
         String foodRequestJson = ObjectConverter.convertObjectToJson(foodRequests.get(0));
 
-        RestHttpRequest.addHeaders();
-
-        commonData.response = RestHttpRequest
-                .requestSpecification
-                .queryParam("name", foodRequests.get(0).getName())
-                .queryParam("field", fieldName)
-                .body(foodRequestJson)
-                .when()
-                .request(String.valueOf(RestHttpRequest.HttpMethods.PUT), "/food/cache/update");
+        commonData.response = FoodDeliveryEndpoints.updateFood(foodRequestJson, foodRequests.get(0).getName(), fieldName);
     }
 
     private void clearFoodCache() {
-        when().request(String.valueOf(RestHttpRequest.HttpMethods.POST), "/food/commit");
+        FoodDeliveryEndpoints.commitFood();
     }
 
     @After

@@ -1,6 +1,7 @@
 package com.devxschool.summer.cucumber.steps.fooddelivery.userregistration;
 
 import com.devxschool.summer.cucumber.steps.common.CommonData;
+import com.devxschool.summer.cucumber.steps.fooddelivery.FoodDeliveryEndpoints;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationRequest;
 import com.devxschool.summer.pojos.fooddelivery.UserRegistrationResponse;
 import com.devxschool.summer.utility.ObjectConverter;
@@ -32,16 +33,10 @@ public class UserRegistrationSteps {
 
     @Given("^user registers to food delivery app with the following fields:$")
     public void user_registers_to_food_delivery_app_with_the_following_fields(List<UserRegistrationRequest> usersToRegister) throws Throwable {
-
         // Serializing usersToRegister element to the JSON String
         String userJson = ObjectConverter.convertObjectToJson(usersToRegister.get(0));
 
-        commonData.response = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body(userJson)
-                .when()
-                .request("POST", "/user/registration");
+        commonData.response = FoodDeliveryEndpoints.registerUser(userJson);
     }
 
     /*
