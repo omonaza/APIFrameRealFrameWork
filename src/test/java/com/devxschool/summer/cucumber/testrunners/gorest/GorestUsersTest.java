@@ -13,6 +13,9 @@ import org.junit.runner.RunWith;
                 "com.devxschool.summer.cucumber.steps.gorest.users",
                 "com.devxschool.summer.cucumber.steps.common"
         },
+        plugin = {
+                "pretty", "html:target/reports","json:target/cucumber.json"
+        },
         tags = {
             "@successfullyCreateUser"
         },

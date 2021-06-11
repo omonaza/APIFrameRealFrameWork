@@ -18,4 +18,5 @@ public class UserInfo {
     private boolean enabled;
     private List<Authority> authorities;
     private UserRegistrationRequest userProfile;
+
 }

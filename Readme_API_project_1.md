@@ -45,7 +45,7 @@ User should submit the following fields in order to successfully register to Foo
  Request body:
  ```json
 {
-	"username":"John",
+	"username":"null",
 	"password": "Test123",
 	"fullName": "John Doe",
 	"address": "123 main st",
